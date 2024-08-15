@@ -49,12 +49,12 @@ def main ():
         if st.button("Update") and choice is not None:
             # Define URLs for the online files
             urls = {
-                "DA Black": "https://github.com/AzeemChaudhry/attendance_merger/raw/main/DA%20Cohort%2001(Black)%20-%20Trackerrr.csv",
-                "DA Gray": "https://github.com/AzeemChaudhry/attendance_merger/raw/main/DA%20Cohort%2001(Gray)%20-%20Tracker%20%20-%20Attendence.csv",
-                "DA White": "https://github.com/AzeemChaudhry/attendance_merger/raw/main/DA%20Cohort%2001(White)%20-%20Tracker.csv",
-                "DS6": "https://github.com/AzeemChaudhry/attendance_merger/raw/main/DS%20Cohort%2006%20-%20Tracker.csv",
-                "DS7 Blue": "https://github.com/AzeemChaudhry/attendance_merger/raw/main/DS%20Cohort%2007(Blue)%20-%20Tracker.csv",
-                "DS7 Green": "https://github.com/AzeemChaudhry/attendance_merger/raw/main/DS%20Cohort%2007(Green)%20-%20Tracker.csv"
+                "DA Black": "DA%20Cohort%2001(Black)%20-%20Trackerrr.csv",
+                "DA Gray": "DA%20Cohort%2001(Gray)%20-%20Tracker%20-%20Attendence.csv",
+                "DA White": "DA%20Cohort%2001(White)%20-%20Tracker.csv",
+                "DS6": "DS%20Cohort%2006%20-%20Tracker.csv",
+                "DS7 Blue": "DS%20Cohort%2007(Blue)%20-%20Tracker.csv",
+                "DS7 Green": "DS%20Cohort%2007(Green)%20-%20Tracker.csv"
             }
             
             if choice in urls:
@@ -62,7 +62,6 @@ def main ():
                     file_path = urls[choice]
                     original_content, sha = fl.get_file_content(file_path)
                     original_df = pd.read_csv(StringIO(original_content))
-                    original_df = fl.download_file(urls[choice])
                     #######################processing the data######################
                     df["Name"] = (df['First name'] + df['Last name']).str.replace(' ', '').str.lower() 
                     # making it lower case to avoid erros 
@@ -78,6 +77,7 @@ def main ():
                     # dropping the extra name column and keeping the original 
                     original_df.drop(columns=['Name_lower'], inplace=True)
                     df.drop(columns=['duration'], inplace=True)
+                    original_df.drop(columns=['duration'], inplace=True)
                     df.drop(columns=['Name'], inplace=True)
 
                     # Update the file on GitHub
